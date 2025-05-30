@@ -4,17 +4,27 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from invoice import Invoice  # Importing the Invoice class
 from email_sender import send_email_with_attachment
+from kivy.core.window import Window
 
-Builder.load_file("ui.kv")  # loads the KV file
+# Set app icon (make sure 'icon.png' exists in the root folder)
+Window.set_icon('icon.png')
+
+Builder.load_file("ui.kv")  # Load the KV layout file
+
+
 class MainWidget(BoxLayout):
     pass
+
 
 class InvoiceLayout(BoxLayout):  # matches <InvoiceLayout> in KV
     pass
 
+
 class InvoiceApp(App):
     def build(self):
+        self.title = "Invoice Now"  # Set window title
         return InvoiceLayout()
+
     def clear_form(self):
         root = self.root
         root.ids.customer_name.text = ''
@@ -23,7 +33,6 @@ class InvoiceApp(App):
         root.ids.item_qty.text = ''
         root.ids.item_price.text = ''
         root.ids.email.text = ''
-
 
     def generate_invoice(self):
         root = self.root
@@ -35,7 +44,7 @@ class InvoiceApp(App):
             price=root.ids.item_price.text,
         )
         email = root.ids.email.text
-        pdf_filename = f"{inv.id}.pdf"  # <-- define the filename here
+        pdf_filename = f"{inv.id}.pdf"
 
         print(f"Generating PDF for Invoice ID: {inv.id}")
         create_invoice_pdf(
@@ -47,13 +56,16 @@ class InvoiceApp(App):
             inv.id
         )
         print(f"Invoice {inv.id} generated successfully!")
-        # Clear the form after PDF is created
+
+        # Clear form fields
         self.clear_form()
+
+        # Send email if provided
         if email:
             try:
                 send_email_with_attachment(
                     to_email=email,
-                    subject=f"Invoice from PDF Invoice Generator: {inv.id}",
+                    subject=f"Invoice from Quick Invoice: {inv.id}",
                     body="Please find your invoice attached.",
                     attachment_path=pdf_filename
                 )
@@ -62,9 +74,6 @@ class InvoiceApp(App):
                 print(f"Failed to send email: {e}")
         else:
             print("No email provided, skipping email sending.")
-
-        pass
-
 
 
 if __name__ == "__main__":
