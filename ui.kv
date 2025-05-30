@@ -1,0 +1,40 @@
+<InvoiceLayout>:
+    orientation: 'vertical'
+    padding: 10
+    spacing: 10
+
+    TextInput:
+        id: customer_name
+        hint_text: "Customer Name"
+        multiline: False
+
+    TextInput:
+        id: customer_address
+        hint_text: "Customer Address"
+        multiline: False
+
+    TextInput:
+        id: email
+        hint_text: "Customer Email"
+        multiline: False
+
+    TextInput:
+        id: item_desc
+        hint_text: "Item Description"
+        multiline: False
+
+    TextInput:
+        id: item_qty
+        hint_text: "Quantity"
+        multiline: False
+        input_filter: 'int'
+
+    TextInput:
+        id: item_price
+        hint_text: "Price"
+        multiline: False
+        input_filter: 'float'
+
+    Button:
+        text: "Generate PDF Invoice"
+        on_press: app.generate_invoice()
