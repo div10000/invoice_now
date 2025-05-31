@@ -3,38 +3,147 @@
     padding: 10
     spacing: 10
 
-    TextInput:
-        id: customer_name
-        hint_text: "Customer Name"
-        multiline: False
+    BoxLayout:
+        size_hint_y: None
+        height: '40dp'
+        Label:
+            text: "Company Name:"
+            size_hint_x: 0.3
+            halign: 'right'
+            valign: 'middle'
+            text_size: self.size
+        TextInput:
+            id: company_name
+            multiline: False
 
-    TextInput:
-        id: customer_address
-        hint_text: "Customer Address"
-        multiline: False
+    BoxLayout:
+        size_hint_y: None
+        height: '40dp'
+        Label:
+            text: "Customer Name:"
+            size_hint_x: 0.3
+            halign: 'right'
+            valign: 'middle'
+            text_size: self.size
+        TextInput:
+            id: customer_name
+            multiline: False
 
-    TextInput:
-        id: email
-        hint_text: "Customer Email"
-        multiline: False
+    BoxLayout:
+        size_hint_y: None
+        height: '40dp'
+        Label:
+            text: "Customer Address:"
+            size_hint_x: 0.3
+            halign: 'right'
+            valign: 'middle'
+            text_size: self.size
+        TextInput:
+            id: customer_address
+            multiline: False
+
+    BoxLayout:
+        size_hint_y: None
+        height: '40dp'
+        Label:
+            text: "Email:"
+            size_hint_x: 0.3
+            halign: 'right'
+            valign: 'middle'
+            text_size: self.size
+        TextInput:
+            id: email
+            multiline: False
+
+    BoxLayout:
+        size_hint_y: None
+        height: '80dp'
+        Label:
+            text: "Message:"
+            size_hint_x: 0.3
+            halign: 'right'
+            valign: 'top'
+            text_size: self.size
+        TextInput:
+            id: message
+            multiline: True
+
+    Label:
+        text: "Items"
+        size_hint_y: None
+        height: '30dp'
+        font_size: '18sp'
+        bold: True
+
+    ScrollView:
+        size_hint_y: 0.4
+        do_scroll_x: False
+
+        BoxLayout:
+            id: items_box
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height
+            spacing: 5
+
+    BoxLayout:
+        size_hint_y: None
+        height: '40dp'
+        spacing: 10
+        Button:
+            text: "Add Item"
+            on_press: app.add_item()
+        Button:
+            text: "Remove Last Item"
+            on_press: app.remove_item()
+
+    BoxLayout:
+        size_hint_y: None
+        height: '40dp'
+        Label:
+            text: "Total:"
+            size_hint_x: 0.7
+            halign: 'right'
+            valign: 'middle'
+            text_size: self.size
+            bold: True
+        Label:
+            id: total_price
+            text: "0.00"
+            size_hint_x: 0.3
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.size
+
+    Button:
+        size_hint_y: None
+        height: '50dp'
+        text: "Generate PDF Invoice"
+        on_press: app.generate_invoice()
+
+<ItemRow@BoxLayout>:
+    size_hint_y: None
+    height: '40dp'
+    spacing: 10
 
     TextInput:
         id: item_desc
         hint_text: "Item Description"
         multiline: False
+        size_hint_x: 0.5
 
     TextInput:
         id: item_qty
-        hint_text: "Quantity"
+        hint_text: "Qty"
         multiline: False
         input_filter: 'int'
+        size_hint_x: 0.2
+        on_text: app.update_total()
 
     TextInput:
         id: item_price
         hint_text: "Price"
         multiline: False
         input_filter: 'float'
-
-    Button:
-        text: "Generate PDF Invoice"
-        on_press: app.generate_invoice()
+        size_hint_x: 0.3
+        on_text: app.update_total()
