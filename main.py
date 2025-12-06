@@ -12,7 +12,7 @@ class InvoiceLayout(BoxLayout):
 
 class InvoiceApp(App):
     def build(self):
-        self.title = "Quick Invoice"
+        self.title = "Invoice Now"
         return InvoiceLayout()
 
     def clear_form(self):
@@ -107,7 +107,7 @@ class InvoiceApp(App):
             try:
                 send_email_with_attachment(
                     to_email=email,
-                    subject=f"Invoice from Quick Invoice: {inv.id}",
+                    subject=f"Invoice from 'Invoice Now': {inv.id}",
                     body="Please find your invoice attached.",
                     attachment_path=pdf_filename,
                 )
